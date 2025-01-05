@@ -24,22 +24,32 @@ ChartJS.register(
 );
 
 const ProjectDash = () => {
-    // Sample data
     const factorsData = {
-        labels: ["E1", "E2", "E3", "S1", "S2", "G1", "G2"],
+        labels: [
+            "Carbon Emission",
+            "Percent of Renewable Energy",
+            "Water Usage",
+            "Land Usage",
+            "Air Emission",
+            "No. of Non-Compliance Incidents",
+            "Life Cycle GHG Emissions",
+            "Employment Generation",
+            "Income Equality Ratio",
+            "Community Investment Rate",
+            "Health & Safety Incident Rate",
+            "Access Improvement Index",
+            "Gender Pay Gap",
+            "Board Diversity Ratio",
+            "ESG Disclosure Rate",
+            "Policy Violation Rate",
+            "Stakeholder Engagement Frequency",
+            "Risk Mitigation Index"
+        ],
         datasets: [
             {
-                label: "Factor Scores",
-                data: [85, 70, 90, 75, 60, 80, 95],
-                backgroundColor: [
-                    "#4caf50", // Green for E
-                    "#4caf50",
-                    "#4caf50",
-                    "#2196f3", // Blue for S
-                    "#2196f3",
-                    "#ff9800", // Orange for G
-                    "#ff9800",
-                ],
+                label: "ESG Factors",
+                data: [80, 60, 75, 50, 70, 90, 85, 65, 72, 68, 55, 78, 60, 70, 85, 50, 65, 75],
+                backgroundColor: "#4caf50",
                 borderColor: "#ffffff",
                 borderWidth: 1,
             },
@@ -59,88 +69,95 @@ const ProjectDash = () => {
         ],
     };
 
-    // Calculate overall score
     const overallScore = esgScoresData.datasets[0].data.reduce((a, b) => a + b, 0) / esgScoresData.datasets[0].data.length;
 
-    // Determine area to be improved
     const minScoreIndex = esgScoresData.datasets[0].data.indexOf(Math.min(...esgScoresData.datasets[0].data));
     const areaToImprove = esgScoresData.labels[minScoreIndex];
 
     return (
         <div className="h-screen flex flex-col justify-center items-center bg-black text-white">
-            <div className="p-6 max-w-6xl mx-auto"> {/* Changed max-w-4xl to max-w-6xl */}
+            <div className="p-6 max-w-8xl mx-auto">
                 <h1 className="text-2xl font-bold text-center mb-6">Project Dashboard</h1>
                 <div className="text-center mb-8">
                     <h2 className="text-xl font-semibold">Overall ESG Score: {overallScore.toFixed(2)}</h2>
                     <h3 className="text-lg">Area to Improve: {areaToImprove}</h3>
                 </div>
-                <div className="mb-8">
-                    <h2 className="text-lg font-semibold mb-4">Factor Scores</h2>
-                    <Bar
-                        data={factorsData}
-                        options={{
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    labels: {
-                                        color: "white", // Legend text color
+                <div className="flex flex-row justify-center items-center space-x-8 mb-8">
+                
+                    <div className="w-[600px] h-[400px]">
+                        <h2 className="text-lg font-semibold mb-4 text-center">Factor Scores</h2>
+                        <Bar
+                            data={factorsData}
+                            options={{
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            color: "white",
+                                        },
                                     },
                                 },
-                            },
-                            scales: {
-                                x: {
-                                    ticks: {
-                                        color: "white", // X-axis tick color
+                                scales: {
+                                    x: {
+                                        ticks: {
+                                            color: "white",
+                                        },
+                                    },
+                                    y: {
+                                        ticks: {
+                                            color: "white",
+                                        },
+                                        min: 0,
+                                        max: 100,
                                     },
                                 },
-                                y: {
-                                    ticks: {
-                                        color: "white", // Y-axis tick color
+                            }}
+                        />
+                    </div>
+                
+                    <div className="w-[600px] h-[400px]">
+                        <h2 className="text-lg font-semibold mb-4 text-center">Overall ESG Scores</h2>
+                        <Radar
+                            data={esgScoresData}
+                            options={{
+                                responsive: true,
+                                scales: {
+                                    r: {
+                                        suggestedMin: 50,
+                                        suggestedMax: 100,
+                                        ticks: {
+                                            color: "white",
+                                        },
+                                        grid: {
+                                            color: "rgba(255, 255, 255, 0.2)",
+                                        },
+                                        angleLines: {
+                                            color: "rgba(255, 255, 255, 0.2)",
+                                        },
                                     },
                                 },
-                            },
-                        }}
-                    />
-                </div>
-                <div>
-                    <h2 className="text-lg font-semibold mb-4">Overall ESG Scores</h2>
-                    <Radar
-                        data={esgScoresData}
-                        options={{
-                            responsive: true,
-                            scales: {
-                                r: {
-                                    suggestedMin: 50,
-                                    suggestedMax: 100,
-                                    ticks: {
-                                        color: "white", // Radar chart ticks color
+                                elements: {
+                                    line: {
+                                        borderColor: "white",
+                                        borderWidth: 2,
                                     },
-                                    grid: {
-                                        color: "rgba(255, 255, 255, 0.2)", // Radar grid lines color
+                                    point: {
+                                        radius: 5,
+                                        backgroundColor: "white",
+                                        borderWidth: 2,
+                                        borderColor: "black",
                                     },
                                 },
-                            },
-                            elements: {
-                                line: {
-                                    borderColor: "white", // Radar line color
-                                    borderWidth: 2,
-                                },
-                                point: {
-                                    radius: 5,
-                                    backgroundColor: "white", // Radar points color
-                                    borderWidth: 2,
-                                    borderColor: "black", // Radar point border color
-                                },
-                            },
-                            plugins: {
-                                legend: {
-                                    labels: {
-                                        color: "white", // Radar chart legend text color
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            color: "white",
+                                        },
                                     },
                                 },
-                            },
-                        }}
-                    />
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
