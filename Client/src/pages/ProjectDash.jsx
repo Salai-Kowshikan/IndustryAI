@@ -68,7 +68,7 @@ const ProjectDash = () => {
 
     return (
         <div className="h-screen flex flex-col justify-center items-center bg-black text-white">
-            <div className="p-6 max-w-4xl mx-auto">
+            <div className="p-6 max-w-6xl mx-auto"> {/* Changed max-w-4xl to max-w-6xl */}
                 <h1 className="text-2xl font-bold text-center mb-6">Project Dashboard</h1>
                 <div className="text-center mb-8">
                     <h2 className="text-xl font-semibold">Overall ESG Score: {overallScore.toFixed(2)}</h2>
